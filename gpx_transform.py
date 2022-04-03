@@ -1,5 +1,6 @@
 import sys
-triggers = ['</trkseg>', '</trk>', '<trk>', 'pass', '<trkseg>']
+# triggers = ['</trkseg>', '</trk>', '<trk>', 'pass', '<trkseg>']
+triggers = ['</trk>', '<trk>', 'pass']
 
 def condition_line(line, trigger):
     line = line.lstrip()
@@ -73,11 +74,11 @@ def remove_seg(lines, new_filename):
                 line = lines[i].lstrip()
                 j = 0
                 cond = True
-                while j<5 and cond:
+                while j<len(triggers) and cond:
                     cond = condition_line(lines[i+j], triggers[j])
                     j+=1
                 if cond:
-                    offset = 4
+                    offset = len(triggers)-1
                 if not cond:
                     output.append(line)
     return '\n'.join(output)
